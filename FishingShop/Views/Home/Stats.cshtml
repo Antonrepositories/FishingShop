@@ -1,0 +1,43 @@
+﻿@{
+	ViewData["Title"] = "Stats";
+}
+<h1 class="align-middle">@ViewData["Title"]</h1>
+
+<h3 style="text-align:center">Categories statistics</h3>
+<div class="container" style="text-align:center; display:flex; justify-content:center">
+	<div id="chart_div"></div>
+</div>
+
+
+@section scripts{
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	<script>
+		google.charts.load('current', { 'packages': ['corechart'] });
+		google.charts.setOnLoadCallback(drawChart);
+
+		function drawChart() {
+			//var jsondata = $.ajax({
+			//	url: "/HomeController?handler=JsonData",
+			//	dataType: "json",
+			//	async: false
+			//}).responseText;
+			//var option = {
+			//		'title': 'Співвідношення кількості книжок та категорій',
+			//		'width': 500,
+			//		'height': 400
+			//	};
+			$.get('/api/Values/JsonData', function (JsonData) {
+				data = google.visualization.arrayToDataTable(JsonData, false);
+				var option = {
+					'title': 'Співвідношення кількості товарів та категорій',
+					'width': 600,
+					'height': 500
+					//'backgroundColor': '#fc466b'
+				};
+				chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+				chart.draw(data, option);
+
+			})
+		}
+	</script>
+}
