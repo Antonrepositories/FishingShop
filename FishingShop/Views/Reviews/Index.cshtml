@@ -19,7 +19,7 @@
                 @Html.DisplayNameFor(model => model.Rating)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IdProductNavigation)
+                @Html.DisplayNameFor(model => model.IdReview)
             </th>
             <th></th>
         </tr>
@@ -34,7 +34,7 @@
                 @Html.DisplayFor(modelItem => item.Rating)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IdProductNavigation.Description)
+                @Html.DisplayFor(modelItem => item.IdReview)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.IdReview">Edit</a> |

@@ -57,9 +57,29 @@ namespace FishingShop.Controllers
 
             return View(product);
         }
+		// POST: Products/Details
+		[HttpPost, ActionName("Details")]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> DetailsAdd(int id, string reviewText, int rating)
+        {
+			ViewBag.Reviews = new List<Review>(_context.Reviews.Where(p => p.IdProduct == id));
+			Review review = new Review
+			{
+				IdProduct = id,
+				Text = reviewText,
+				Rating = rating
+			};
+			Console.WriteLine($"ReviewId = {review.IdReview} productid = {id} reviewtext = {reviewText} rating = {rating}");
+			_context.Add(review);
+			await _context.SaveChangesAsync();
+			var product = await _context.Products
+				.Include(p => p.CategoryNavigation)
+				.FirstOrDefaultAsync(m => m.IdProduct == id);
+			return View(product);
+        }
 
-        // GET: Products/Create
-        public IActionResult Create()
+		// GET: Products/Create
+		public IActionResult Create()
         {
             ViewData["Category"] = new SelectList(_context.Categories, "IdCategory", "Name");
             return View();

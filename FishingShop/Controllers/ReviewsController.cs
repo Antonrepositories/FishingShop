@@ -59,7 +59,8 @@ namespace FishingShop.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("IdReview,Text,Rating,IdProduct")] Review review)
         {
-            if (ModelState.IsValid)
+			Console.WriteLine($"ReviewId = {review.IdReview} reviewtext = {review.Text} rating = {review.Rating}");
+			if (ModelState.IsValid)
             {
                 _context.Add(review);
                 await _context.SaveChangesAsync();
