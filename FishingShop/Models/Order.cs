@@ -19,5 +19,5 @@ public partial class Order
 
     public virtual DeliveryPoint DeliverypointNavigation { get; set; } = null!;
 
-    public virtual User IdUserNavigation { get; set; } = null!;
+    public virtual ApplicationUser IdUserNavigation { get; set; } = null!;
 }

@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using FishingShop.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace FishingShop;
 
-public partial class ShopDatabaseContext : DbContext
+public partial class ShopDatabaseContext : IdentityDbContext<ApplicationUser, Role, int>
 {
     public ShopDatabaseContext()
     {
@@ -27,16 +29,53 @@ public partial class ShopDatabaseContext : DbContext
     public virtual DbSet<Product> Products { get; set; }
 
     public virtual DbSet<Review> Reviews { get; set; }
+    public virtual DbSet<ApplicationUser> ApplicationUsers { get; set; }
 
-    public virtual DbSet<User> Users { get; set; }
+    public virtual DbSet<UserOld> UsersOld { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server= DESKTOP-8NG6GSK\\SQLEXPRESS;\nDatabase=ShopDatabase; Trusted_Connection=True; Trust Server Certificate=True;");
+        => optionsBuilder.UseSqlServer("Server= DESKTOP-8NG6GSK\\SQLEXPRESS;\nDatabase=ShopDatabaseIdentity; Trusted_Connection=True; Trust Server Certificate=True;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Category>(entity =>
+		base.OnModelCreating(modelBuilder);
+  //      //Users
+  //      modelBuilder.Entity<ApplicationUser>(entity =>
+  //          entity.ToTable(name :"ApplicationUsers"));
+		////Roles
+		//modelBuilder.Entity<Role>(entity =>
+		//	entity.ToTable(name: "ApplicationUserRoles"));
+		////Roles
+		//modelBuilder.Entity<IdentityRole>(entity =>
+		//	entity.ToTable(name: "ApplicationRoles"));
+		////Claims
+		//modelBuilder.Entity<IdentityUserClaim<string>>(entity =>
+		//{
+		//	entity.ToTable("UserClaims");
+		//});
+		////Login
+		//modelBuilder.Entity<IdentityUserLogin<string>>(entity =>
+		//{
+		//	entity.ToTable("UserLogins");
+  //          //in case you chagned the TKey type
+  //          entity.HasKey(key => new { key.ProviderKey, key.LoginProvider });
+  //      });
+  //      //RoleClaim
+		//modelBuilder.Entity<IdentityRoleClaim<string>>(entity =>
+		//{
+		//	entity.ToTable("RoleClaims");
+
+		//});
+  //      //UserToken
+		//modelBuilder.Entity<IdentityUserToken<string>>(entity =>
+		//{
+		//	entity.ToTable("UserTokens");
+  //          //in case you chagned the TKey type
+  //          entity.HasKey(key => new { key.UserId, key.LoginProvider, key.Name });
+
+  //      });
+		modelBuilder.Entity<Category>(entity =>
         {
             entity.HasKey(e => e.IdCategory);
 
@@ -136,7 +175,7 @@ public partial class ShopDatabaseContext : DbContext
                 .HasConstraintName("FK_Review_Product");
         });
 
-        modelBuilder.Entity<User>(entity =>
+        modelBuilder.Entity<UserOld>(entity =>
         {
             entity.HasKey(e => e.IdUser);
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace FishingShop.Models;
 
-public partial class User
+public partial class UserOld
 {
     public int IdUser { get; set; }
 
