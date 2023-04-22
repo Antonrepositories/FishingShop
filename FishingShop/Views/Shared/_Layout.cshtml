@@ -36,12 +36,19 @@
 							</ul>
 						</li>
 						<li class="navbar-nav m-lg-auto" style="justify-content:end">
+							@if (User.Identity.IsAuthenticated)
+							{
+							<form class="form-inline" method="post" asp-controller="Account" asp-action="Logout">
+								<button type="submit" class="btn btn-danger" style="margin-right:3px"><i class="bi bi-box-arrow-in-right"></i> Logout</button>
+							</form>
+							}
+							else{
 							<li class="nav-item ml-auto">
-							<a class="btn btn-success" asp-controller="Account" asp-action="Register" style="margin-right:3px"><i class="bi bi-box-arrow-in-right"></i> Log In</a>
+							<a class="btn btn-success" asp-controller="Account" asp-action="Login" style="margin-right:3px"><i class="bi bi-box-arrow-in-right"></i> Log In</a>
 							</li> 
 							<li class="nav-item ml-auto">
-							<a class="btn btn-primary"><i class="bi bi-person-plus"></i> Register</a>
-							</li>
+							<a class="btn btn-primary" asp-controller="Account" asp-action="Register"><i class="bi bi-person-plus"></i> Register</a>
+							</li>}
 						</li>
 						
 					</ul>

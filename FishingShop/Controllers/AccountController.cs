@@ -1,5 +1,8 @@
 ﻿using FishingShop.Models;
 using FishingShop.ViewModel;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -48,24 +51,48 @@ namespace FishingShop.Controllers
 			}
 			return RedirectToAction("Index", "Products");
 		}
-		[HttpGet]
+		[HttpGet, ActionName("Login")]
 		public IActionResult Login(string returnUrl = null)
 		{
-			return RedirectToAction("Index", "Products");
+			return View(new LoginViewModel { ReturnUrl = returnUrl});
 		}
-		[HttpPost]
+		[HttpPost, ActionName("Login")]
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Login(LoginViewModel model)
 		{
+			Console.WriteLine("Working method");
 			if (ModelState.IsValid)
 			{
-				var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
+				var user = _useUserManager.Users.Where(user => user.Email == model.Email).ToList()[0];
+				var result = await _signInManager.PasswordSignInAsync(user.UserName, model.Password, model.RememberMe, false);
+				Console.WriteLine(user.UserName);
 				if (result.Succeeded)
 				{
-					return RedirectToAction("Index", "Products");
-				}
+					if (!string.IsNullOrEmpty(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl))
+					{
+						return Redirect(model.ReturnUrl);
+					}
+					else
+					{
+                        return RedirectToAction("Index", "Products");
+                    }
+                }
 			}
 			return View(model);
 		}
-	}
+		[HttpPost, ActionName("Logout")]
+		public async Task<IActionResult> Logout(string returnUrl = null)
+		{
+			await _signInManager.SignOutAsync();
+			if (returnUrl != null)
+			{
+				return LocalRedirect(returnUrl);
+			}
+			else
+			{
+				return RedirectToActionPermanent("Login", "Account");
+				//return RedirectToPage("/Account", new { area = "Login" });
+			}
+		}
+    }
 }

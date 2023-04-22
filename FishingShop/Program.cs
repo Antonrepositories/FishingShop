@@ -11,8 +11,20 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 builder.Services.AddDbContext<ShopDatabaseContext>(option => option.UseSqlServer(
     builder.Configuration.GetConnectionString("IdentityConnection")));
-        //"DefaultCOnnection")));
+//"DefaultCOnnection")));
+//Services
+builder.Services.AddRazorPages();
+builder.Services.ConfigureApplicationCookie(options =>
+{
+	// Cookie settings
+	options.Cookie.HttpOnly = true;
+	options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
 
+	options.LoginPath = "/Views/Account/Login";
+	options.AccessDeniedPath = "/Views/Account/Register";
+	options.SlidingExpiration = true;
+});
+//
 //Aunthefication and authorization
 builder.Services.AddIdentity<ApplicationUser, Role>().AddEntityFrameworkStores<ShopDatabaseContext>().AddDefaultTokenProviders();
 builder.Services.AddControllersWithViews();
@@ -37,5 +49,5 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Reviews}/{action=Index}/{id?}");
-
+app.MapRazorPages();
 app.Run();
