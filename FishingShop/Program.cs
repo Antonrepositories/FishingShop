@@ -29,14 +29,29 @@ builder.Services.ConfigureApplicationCookie(options =>
 builder.Services.AddIdentity<ApplicationUser, Role>().AddEntityFrameworkStores<ShopDatabaseContext>().AddDefaultTokenProviders();
 builder.Services.AddControllersWithViews();
 var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
+using (var scope = app.Services.CreateScope())
 {
-    app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
+	var services = scope.ServiceProvider;
+	try
+	{
+		var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
+		var rolesManager = services.GetRequiredService<RoleManager<Role>>();
+		await RoleInitializer.InitializyAsync(userManager, rolesManager);
+	}
+	catch(Exception ex)
+	{
+		var logger = services.GetService<ILogger<Program>>();
+		logger.LogError(ex, "Error occured");
+	}
 }
+
+	// Configure the HTTP request pipeline.
+	if (!app.Environment.IsDevelopment())
+	{
+		app.UseExceptionHandler("/Home/Error");
+		// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+		app.UseHsts();
+	}
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
@@ -48,6 +63,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Reviews}/{action=Index}/{id?}");
+    pattern: "{controller=Roles}/{action=Index}/{id?}");
 app.MapRazorPages();
 app.Run();
