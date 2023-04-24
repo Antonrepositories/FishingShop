@@ -1,23 +1,24 @@
 ﻿@model FishingShop.ViewModel.LoginViewModel
-<h2> Register new account</h2>
-<form asp-controller="Account" asp-action="Login">
+<div class="container" style="text-align:center; display:flex; justify-content:center">
+	<form asp-controller="Account" asp-action="Login" style="border:solid; width:600px; border-radius:5px; background-image:url('https://images.pexels.com/photos/7130555/pexels-photo-7130555.jpeg?cs=srgb&dl=pexels-codioful-%28formerly-gradienta%29-7130555.jpg&fm=jpg')">
+	<h3>Login</h3>
 	<div asp-validation-summary="ModelOnly"></div>
-	<div class="'form-group'">
-		<label asp-for="Email"></label>
-		<input asp-for="Email" />
+	<div class="mb-3">
+		<label asp-for="Email" class="control-label"></label>
+		<input asp-for="Email" class="form-control"/>
 		<span asp-validation-for="Email"></span>
 	</div>
-	<div class="'form-group'">
-		<label asp-for="Password"></label>
-		<input asp-for="Password" />
+	<div class="form-group; mb-3">
+		<label asp-for="Password" class="control-label"></label>
+		<input asp-for="Password" class="form-control"/>
 		<span asp-validation-for="Password"></span>
 	</div>
-	<div class="form-group">
+	<div class="form-group; mb-3">
 		<label asp-for="RememberMe"></label>
 		<input asp-for="RememberMe" />
 	</div>
-	<div class="form-group">
+	<div class="form-group; mb-3">
 		<input type="submit" value="Login" class="btn btn-primary" style="font-weight:bold; margin-top:5px" />
-		<a class="btn btn-secondary" style="font-weight:bold; margin-top:5px" asp-action="Index">Back to List</a>
 	</div>
 </form>
+<div/>

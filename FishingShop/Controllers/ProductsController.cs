@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using FishingShop;
 using FishingShop.Models;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace FishingShop.Controllers
 {
@@ -57,8 +59,9 @@ namespace FishingShop.Controllers
 
             return View(product);
         }
-		// POST: Products/Details
-		[HttpPost, ActionName("Details")]
+        // POST: Products/Details
+        [Authorize(Roles = "admin")]
+        [HttpPost, ActionName("Details")]
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> DetailsAdd(int id, string reviewText, int rating)
         {
@@ -78,8 +81,9 @@ namespace FishingShop.Controllers
 			return View(product);
         }
 
-		// GET: Products/Create
-		public IActionResult Create()
+        // GET: Products/Create
+        [Authorize(Roles = "admin")]
+        public IActionResult Create()
         {
             ViewData["Category"] = new SelectList(_context.Categories, "IdCategory", "Name");
             return View();
@@ -88,6 +92,7 @@ namespace FishingShop.Controllers
         // POST: Products/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("IdProduct,Image,Price,Description,Category,Name")] Product product)
@@ -107,6 +112,7 @@ namespace FishingShop.Controllers
         }
 
         // GET: Products/Edit/5
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Products == null)
@@ -126,6 +132,7 @@ namespace FishingShop.Controllers
         // POST: Products/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("IdProduct,Image,Price,Description,Category,Name")] Product product)
@@ -160,6 +167,7 @@ namespace FishingShop.Controllers
         }
 
         // GET: Products/Delete/5
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Products == null)
@@ -179,6 +187,7 @@ namespace FishingShop.Controllers
         }
 
         // POST: Products/Delete/5
+        [Authorize(Roles = "admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

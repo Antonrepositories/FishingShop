@@ -13,7 +13,7 @@
 	<header>
 		<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
 			<div class="container-fluid">
-				<a class="navbar-brand" asp-area="" asp-controller="Products" asp-action="Index">FishingShop</a>
+				<a class="navbar-brand" asp-area="" asp-controller="Products" asp-action="Index">FishingShopCatalog</a>
 				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
 						aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
@@ -21,36 +21,41 @@
 				<div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
 					<ul class="navbar-nav flex-grow-1">
 						<li class="nav-item">
-							<a class="nav-link text-dark" asp-area="" asp-controller="DeliveryPoints" asp-action="Index">Точки Видачі</a>
+							<a class="nav-link text-dark" asp-area="" asp-controller="DeliveryPoints" asp-action="Index">Our shops</a>
 						</li>
-@*						<li class="nav-item">
-							<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+						@*						<li class="nav-item">
+						<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
 						</li>*@
-						<li class="nav-item dropdown" style="justify-content:end">
-							<button class="btn btn-info dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-three-dots-vertical"></i> Menu</button>
-							<ul class="dropdown-menu">
-								<li><a class="dropdown-item" asp-controller="Home" asp-action="Stats"><i class="bi bi-bar-chart-fill"></i> Stats</a></li>
-								<li><a class="dropdown-item" href="#"><i class="bi bi-file-earmark-fill"></i> Import/Export file</a></li>
-								<li><a class="dropdown-item" href="#"><i class="bi bi-person-fill"></i> Users</a></li>
-								<li><a class="dropdown-item" href="#"><i class="bi bi-boxes"></i> Orders</a></li>
-							</ul>
-						</li>
+						@if (User.IsInRole("admin"))
+						{
+							<li class="nav-item dropdown" style="justify-content:end">
+								<button class="btn btn-info dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-three-dots-vertical"></i> Menu</button>
+								<ul class="dropdown-menu">
+									<li><a class="dropdown-item" asp-controller="Home" asp-action="Stats"><i class="bi bi-bar-chart-fill"></i> Stats</a></li>
+									<li><a class="dropdown-item" asp-controller="Roles" asp-action="UserList"><i class="bi bi-person-fill"></i> Users</a></li>
+								</ul>
+							</li>
+						}
 						<li class="navbar-nav m-lg-auto" style="justify-content:end">
 							@if (User.Identity.IsAuthenticated)
 							{
-							<form class="form-inline" method="post" asp-controller="Account" asp-action="Logout">
-								<button type="submit" class="btn btn-danger" style="margin-right:3px"><i class="bi bi-box-arrow-in-right"></i> Logout</button>
-							</form>
+							<li class="nav-item ml-auto">
+								<form class="form-inline" method="post" asp-controller="Account" asp-action="Logout">
+									<button type="submit" class="btn btn-danger" style="margin-right:3px"><i class="bi bi-box-arrow-in-right"></i> Logout</button>
+								</form>
+							</li>
 							}
-							else{
+							else
+							{
 							<li class="nav-item ml-auto">
-							<a class="btn btn-success" asp-controller="Account" asp-action="Login" style="margin-right:3px"><i class="bi bi-box-arrow-in-right"></i> Log In</a>
-							</li> 
+								<a class="btn btn-success" asp-controller="Account" asp-action="Login" style="margin-right:3px"><i class="bi bi-box-arrow-in-right"></i> Log In</a>
+							</li>
 							<li class="nav-item ml-auto">
-							<a class="btn btn-primary" asp-controller="Account" asp-action="Register"><i class="bi bi-person-plus"></i> Register</a>
-							</li>}
+								<a class="btn btn-primary" asp-controller="Account" asp-action="Register"><i class="bi bi-person-plus"></i> Register</a>
+							</li>
+							}
 						</li>
-						
+
 					</ul>
 				</div>
 			</div>

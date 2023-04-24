@@ -1,29 +1,36 @@
 ﻿@model FishingShop.ViewModel.RegisterViewModel
-<h2> Register new account</h2>
-<form asp-controller="Account" asp-action="Register">
-	<div asp-validation-summary="ModelOnly"></div>
-	<div class="'form-group'">
-		<label asp-for="Email"></label>
-		<input asp-for="Email"/>
-		<span asp-validation-for="Email"></span>
-	</div>
-	<div class="'form-group'">
-		<label asp-for="Password"></label>
-		<input asp-for="Password" />
-		<span asp-validation-for="Password"></span>
-	</div>
-	<div class="form-group">
-		<label asp-for="Name"></label>
-		<input asp-for="Name" />
-		<span asp-validation-for="Name"></span>
-	</div>
-	<div class="form-group">
-		<label asp-for="Surname"></label>
-		<input asp-for="Surname" />
-		<span asp-validation-for="Surname"></span>
-	</div>
-	<div class="form-group">
-		<input type="submit" value="Create" class="btn btn-success" style="font-weight:bold; margin-top:5px" />
-		<a class="btn btn-secondary" style="font-weight:bold; margin-top:5px" asp-action="Index">Back to List</a>
-	</div>
-</form>
+<head>
+	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/FishingShop.styles.css" asp-append-version="true" />
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css">
+</head>
+<div class="container" style="text-align:center; display:flex; justify-content:center">
+	<form asp-controller="Account" asp-action="Register" class="align-middle" style="border:solid; width:600px; border-radius:5px; background-image:url('https://images.pexels.com/photos/7130555/pexels-photo-7130555.jpeg?cs=srgb&dl=pexels-codioful-%28formerly-gradienta%29-7130555.jpg&fm=jpg')">
+		<h3 style="margin-top:5px">Register new account</h3>
+		<div asp-validation-summary="ModelOnly"></div>
+		<div class="mb-3">
+			<label class="control-label" asp-for="Email"></label>
+			<input asp-for="Email" class="form-control"/>
+			<span asp-validation-for="Email"></span>
+		</div>
+		<div class="mb-3">
+			<label asp-for="Password" class="control-label"></label>
+			<input asp-for="Password" class="form-control"/>
+			<span asp-validation-for="Password"></span>
+		</div>
+		<div class="mb-3">
+			<label asp-for="Name" class="control-label">Name</label>
+			<input asp-for="Name" class="form-control" />
+			<span asp-validation-for="Name"></span>
+		</div>
+		<div class="mb-3">
+			<label asp-for="Surname" class="control-label"></label>
+			<input asp-for="Surname" class="form-control"/>
+			<span asp-validation-for="Surname"></span>
+		</div>
+		<div class="mb-3">
+			<input type="submit" value="Create" class="btn btn-primary" style="font-weight:bold; margin-top:5px" />
+		</div>
+	</form>
+<div />

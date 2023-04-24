@@ -18,6 +18,7 @@
 				<h1 class="card-title" style="color:white">@Model.Name</h1>
 				<h3 class="card-text" style="color:deeppink">@Model.Price грн.</h3>
 				<h3 class="card-text; text-secondary">@Html.DisplayFor(model => model.CategoryNavigation.Name)</h3>
+				<h3 class="card-text; align-bottom" style="color:deeppink">Want to buy? Visit one of our <a asp-controller="DeliveryPoints" asp-action="Index">stores</a>!</h3>
 			</div>
 		</div>
 	</div>

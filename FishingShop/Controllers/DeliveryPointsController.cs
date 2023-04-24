@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FishingShop;
 using FishingShop.Models;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace FishingShop.Controllers
 {
@@ -19,16 +21,17 @@ namespace FishingShop.Controllers
             _context = context;
         }
 
-        // GET: DeliveryPoints
-        public async Task<IActionResult> Index()
+		// GET: DeliveryPoints
+		public async Task<IActionResult> Index()
         {
               return _context.DeliveryPoints != null ? 
                           View(await _context.DeliveryPoints.ToListAsync()) :
                           Problem("Entity set 'ShopDatabaseContext.DeliveryPoints'  is null.");
         }
 
-        // GET: DeliveryPoints/Details/5
-        public async Task<IActionResult> Details(int? id)
+		// GET: DeliveryPoints/Details/5
+		[Authorize(Roles = "admin")]
+		public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.DeliveryPoints == null)
             {
@@ -45,16 +48,18 @@ namespace FishingShop.Controllers
             return View(deliveryPoint);
         }
 
-        // GET: DeliveryPoints/Create
-        public IActionResult Create()
+		// GET: DeliveryPoints/Create
+		[Authorize(Roles = "admin")]
+		public IActionResult Create()
         {
             return View();
         }
 
-        // POST: DeliveryPoints/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+		// POST: DeliveryPoints/Create
+		// To protect from overposting attacks, enable the specific properties you want to bind to.
+		// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+		[Authorize(Roles = "admin")]
+		[HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("IdPoint,Image,Adress")] DeliveryPoint deliveryPoint)
         {
@@ -67,8 +72,9 @@ namespace FishingShop.Controllers
             return View(deliveryPoint);
         }
 
-        // GET: DeliveryPoints/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+		// GET: DeliveryPoints/Edit/5
+		[Authorize(Roles = "admin")]
+		public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.DeliveryPoints == null)
             {
@@ -83,10 +89,11 @@ namespace FishingShop.Controllers
             return View(deliveryPoint);
         }
 
-        // POST: DeliveryPoints/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+		// POST: DeliveryPoints/Edit/5
+		// To protect from overposting attacks, enable the specific properties you want to bind to.
+		// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+		[Authorize(Roles = "admin")]
+		[HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("IdPoint,Image,Adress")] DeliveryPoint deliveryPoint)
         {
@@ -118,8 +125,9 @@ namespace FishingShop.Controllers
             return View(deliveryPoint);
         }
 
-        // GET: DeliveryPoints/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+		// GET: DeliveryPoints/Delete/5
+		[Authorize(Roles = "admin")]
+		public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.DeliveryPoints == null)
             {
@@ -136,8 +144,9 @@ namespace FishingShop.Controllers
             return View(deliveryPoint);
         }
 
-        // POST: DeliveryPoints/Delete/5
-        [HttpPost, ActionName("Delete")]
+		// POST: DeliveryPoints/Delete/5
+		[Authorize(Roles = "admin")]
+		[HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {

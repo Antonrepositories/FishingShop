@@ -3,7 +3,7 @@
 <h2>Change role for @Model.UserEnail</h2>
 <form asp-action="Edit" method="post">
 	<input type="hidden" name="userId" value="@Model.UserId"/>
-	<div class="form-group">
+	<div class="form-group; mb-3">
 		@foreach(Role role in Model.Allroles)
 		{
 			<label>@role.Name</label>

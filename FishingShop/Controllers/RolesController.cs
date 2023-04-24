@@ -21,11 +21,14 @@ namespace FishingShop.Controllers
 			var roles = _roleManager.Roles.ToList();
 			return View(roles);
 		}
+		[Authorize(Roles ="admin")]
 		public IActionResult UserList()
 		{
 			var users = _userManager.Users.ToList();
 			return View(users);
 		}
+		[Authorize(Roles = "admin")]
+
 		public async Task<IActionResult> Edit(int userId)
 		{
 			ApplicationUser user = _userManager.Users.Where(p => p.Id == userId).ToList()[0];
@@ -44,6 +47,8 @@ namespace FishingShop.Controllers
 			}
 			return NotFound();
 		}
+		[Authorize(Roles = "admin")]
+
 		[HttpPost, ActionName("Edit")]
 		public async Task<IActionResult> Edit(int userId, List<string> Roles)
 		{

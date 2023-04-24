@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FishingShop;
 using FishingShop.Models;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace FishingShop.Controllers
 {
@@ -19,15 +21,17 @@ namespace FishingShop.Controllers
             _context = context;
         }
 
-        // GET: Reviews
-        public async Task<IActionResult> Index()
+		// GET: Reviews
+		[Authorize(Roles = "admin")]
+		public async Task<IActionResult> Index()
         {
             var shopDatabaseContext = _context.Reviews.Include(r => r.IdProductNavigation);
             return View(await shopDatabaseContext.ToListAsync());
         }
 
-        // GET: Reviews/Details/5
-        public async Task<IActionResult> Details(int? id)
+		// GET: Reviews/Details/5
+		[Authorize(Roles = "admin")]
+		public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Reviews == null)
             {
@@ -45,17 +49,19 @@ namespace FishingShop.Controllers
             return View(review);
         }
 
-        // GET: Reviews/Create
-        public IActionResult Create()
+		// GET: Reviews/Create
+		[Authorize(Roles = "admin")]
+		public IActionResult Create()
         {
             ViewData["IdProduct"] = new SelectList(_context.Products, "IdProduct", "Name");
             return View();
         }
 
-        // POST: Reviews/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+		// POST: Reviews/Create
+		// To protect from overposting attacks, enable the specific properties you want to bind to.
+		// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+		[Authorize(Roles = "admin")]
+		[HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("IdReview,Text,Rating,IdProduct")] Review review)
         {
@@ -70,8 +76,9 @@ namespace FishingShop.Controllers
             return View(review);
         }
 
-        // GET: Reviews/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+		// GET: Reviews/Edit/5
+		[Authorize(Roles = "admin")]
+		public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Reviews == null)
             {
@@ -87,10 +94,11 @@ namespace FishingShop.Controllers
             return View(review);
         }
 
-        // POST: Reviews/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+		// POST: Reviews/Edit/5
+		// To protect from overposting attacks, enable the specific properties you want to bind to.
+		// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+		[Authorize(Roles = "admin")]
+		[HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("IdReview,Text,Rating,IdProduct")] Review review)
         {
@@ -123,8 +131,9 @@ namespace FishingShop.Controllers
             return View(review);
         }
 
-        // GET: Reviews/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+		// GET: Reviews/Delete/5
+		[Authorize(Roles = "admin")]
+		public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Reviews == null)
             {
@@ -142,8 +151,9 @@ namespace FishingShop.Controllers
             return View(review);
         }
 
-        // POST: Reviews/Delete/5
-        [HttpPost, ActionName("Delete")]
+		// POST: Reviews/Delete/5
+		[Authorize(Roles = "admin")]
+		[HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {

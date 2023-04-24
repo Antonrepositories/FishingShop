@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FishingShop;
 using FishingShop.Models;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace FishingShop.Controllers
 {
@@ -19,16 +21,18 @@ namespace FishingShop.Controllers
             _context = context;
         }
 
-        // GET: Categories
-        public async Task<IActionResult> Index()
+		// GET: Categories
+		[Authorize(Roles = "admin")]
+		public async Task<IActionResult> Index()
         {
               return _context.Categories != null ? 
                           View(await _context.Categories.ToListAsync()) :
                           Problem("Entity set 'ShopDatabaseContext.Categories'  is null.");
         }
 
-        // GET: Categories/Details/5
-        public async Task<IActionResult> Details(int? id)
+		// GET: Categories/Details/5
+		[Authorize(Roles = "admin")]
+		public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Categories == null)
             {
@@ -45,16 +49,18 @@ namespace FishingShop.Controllers
             return View(category);
         }
 
-        // GET: Categories/Create
-        public IActionResult Create()
+		// GET: Categories/Create
+		[Authorize(Roles = "admin")]
+		public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Categories/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+		// POST: Categories/Create
+		// To protect from overposting attacks, enable the specific properties you want to bind to.
+		// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+		[Authorize(Roles = "admin")]
+		[HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("IdCategory,Name")] Category category)
         {
@@ -67,8 +73,9 @@ namespace FishingShop.Controllers
             return View(category);
         }
 
-        // GET: Categories/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+		// GET: Categories/Edit/5
+		[Authorize(Roles = "admin")]
+		public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Categories == null)
             {
@@ -83,10 +90,11 @@ namespace FishingShop.Controllers
             return View(category);
         }
 
-        // POST: Categories/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+		// POST: Categories/Edit/5
+		// To protect from overposting attacks, enable the specific properties you want to bind to.
+		// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+		[Authorize(Roles = "admin")]
+		[HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("IdCategory,Name")] Category category)
         {
@@ -118,8 +126,9 @@ namespace FishingShop.Controllers
             return View(category);
         }
 
-        // GET: Categories/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+		// GET: Categories/Delete/5
+		[Authorize(Roles = "admin")]
+		public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Categories == null)
             {
@@ -136,8 +145,9 @@ namespace FishingShop.Controllers
             return View(category);
         }
 
-        // POST: Categories/Delete/5
-        [HttpPost, ActionName("Delete")]
+		// POST: Categories/Delete/5
+		[Authorize(Roles = "admin")]
+		[HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {

@@ -18,7 +18,10 @@
 			<div class="form-group col-md-4 align-self-end">
 				<input type="submit" name="actionButton" value="Filter" class="btn btn-dark"/>
 				<a asp-action="Index" class="btn btn-danger">Clear</a>
-				<a class="btn btn-dark" asp-action="Create"><i class="bi bi-plus-square-fill" style="margin-right:8px"></i>Create New</a>
+				@if (User.IsInRole("admin"))
+				{
+					<a class="btn btn-dark" asp-action="Create"><i class="bi bi-plus-square-fill" style="margin-right:8px"></i>Create New</a>
+				}
 			</div>
 		</div>
 	</div>
@@ -50,9 +53,16 @@
 							<p class="card-text" style="text-align:center; float:left; color: white">Ціна: @item.Price₴</p>
 						</div>
 						<div class="card-footer">
-							<a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.IdProduct"><i class="bi bi-pencil-square"></i>Edit</a>
-							<a class="btn btn-secondary" asp-action="Details" asp-route-id="@item.IdProduct"><i class="bi bi-eye"></i>Details</a>
-							<a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.IdProduct"><i class="bi bi-trash"></i>Delete</a>
+							@if (User.IsInRole("admin"))
+							{
+								<a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.IdProduct"><i class="bi bi-pencil-square"></i>Edit</a>
+								<a class="btn btn-secondary" asp-action="Details" asp-route-id="@item.IdProduct"><i class="bi bi-eye"></i>Details</a>
+								<a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.IdProduct"><i class="bi bi-trash"></i>Delete</a>
+							}
+							else
+							{
+								<a class="btn btn-primary" asp-action="Details" asp-route-id="@item.IdProduct"><i class="bi bi-eye"></i>Details</a>
+							}
 						</div>
 					</div>
 				</div>

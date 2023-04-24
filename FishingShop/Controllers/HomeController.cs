@@ -1,6 +1,8 @@
 ﻿using FishingShop.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 using System.Diagnostics;
 
 namespace FishingShop.Controllers
@@ -18,8 +20,9 @@ namespace FishingShop.Controllers
         {
             return View();
         }
+		[Authorize(Roles = "admin")]
 
-        public IActionResult Stats()
+		public IActionResult Stats()
         {
             return View();
         }

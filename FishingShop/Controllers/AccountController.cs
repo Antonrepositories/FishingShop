@@ -30,10 +30,11 @@ namespace FishingShop.Controllers
 
 			if (ModelState.IsValid)
 			{
-				ApplicationUser user = new ApplicationUser { Email = model.Email, Name = model.Name, Surname = model.Surname };
+				ApplicationUser user = new ApplicationUser { Email = model.Email, Name = model.Name, Surname = model.Surname, UserName = model.Email };
 				var result = await _useUserManager.CreateAsync(user, model.Password);
 				if (result.Succeeded)
 				{
+					await _useUserManager.AddToRoleAsync(user, "user");
 					await _signInManager.SignInAsync(user, false);
 					Console.WriteLine($"User registered succesfully, his email - {model.Email}");
 					return RedirectToAction("Index", "Products");
