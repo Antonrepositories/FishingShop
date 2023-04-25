@@ -21,7 +21,7 @@ builder.Services.ConfigureApplicationCookie(options =>
 	options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
 
 	options.LoginPath = "/Views/Account/Login";
-	options.AccessDeniedPath = "/Views/Products/Index";
+	options.AccessDeniedPath = "/Views/Shared/Occured";
 	options.SlidingExpiration = true;
 });
 //

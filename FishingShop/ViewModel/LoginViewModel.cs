@@ -7,7 +7,7 @@ namespace FishingShop.ViewModel
 		[Display(Name = "Email")]
 		public string Email { get; set; }
 		[Required]
-		[DataType(DataType.Password)]
+		[DataType(DataType.Password, ErrorMessage ="Incorrect password form")]
 		[Display(Name ="Password")]
 		public string Password { get; set; }
 		[Display(Name ="Remember me")]

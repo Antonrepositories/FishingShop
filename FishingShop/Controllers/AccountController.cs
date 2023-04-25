@@ -26,7 +26,6 @@ namespace FishingShop.Controllers
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Register(RegisterViewModel model)
 		{
-			Console.WriteLine($"User registered succesfully, his email - Just method");
 
 			if (ModelState.IsValid)
 			{
@@ -41,16 +40,21 @@ namespace FishingShop.Controllers
 				}
 				else
 				{
-					Console.WriteLine($"User registered unsuccesfully, his email - {model.Email}");
+					return View("Occured");
+					//Console.WriteLine($"User registered unsuccesfully, his email - {model.Email}");
 
-					foreach (var error in result.Errors)
-					{
-						ModelState.AddModelError(string.Empty, error.Description);
-						Console.WriteLine($"Error Description -  {error.Description}");
-					}
+					//foreach (var error in result.Errors)
+					//{
+					//	ModelState.AddModelError(string.Empty, error.Description);
+					//	Console.WriteLine($"Error Description -  {error.Description}");
+					//}
 				}
 			}
-			return RedirectToAction("Index", "Products");
+			else
+			{
+				return View(model);
+			}
+			//return RedirectToAction("Index", "Products");
 		}
 		[HttpGet, ActionName("Login")]
 		public IActionResult Login(string returnUrl = null)
@@ -75,11 +79,18 @@ namespace FishingShop.Controllers
 					}
 					else
 					{
-                        return RedirectToAction("Index", "Products");
-                    }
-                }
+						return RedirectToAction("Index", "Products");
+					}
+				}
+				else
+				{
+					return View("Occured");
+				}
 			}
-			return View(model);
+			else
+			{
+				return View(model);
+			}
 		}
 		[HttpPost, ActionName("Logout")]
 		public async Task<IActionResult> Logout(string returnUrl = null)
@@ -95,5 +106,32 @@ namespace FishingShop.Controllers
 				//return RedirectToPage("/Account", new { area = "Login" });
 			}
 		}
-    }
+		[AllowAnonymous]
+		[AcceptVerbs("GET", "POST")]
+		[ActionName("VerifyEmail")]
+		public IActionResult VerifyEmail(string email)
+		{
+			//var result = await _useUserManager.FindByEmailAsync(email);
+			Console.WriteLine("CHINAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+			var user = _useUserManager.Users.Where(user => user.Email == email).ToList();
+			if (user.Count == 0)
+			{
+				return Json(true);
+			}
+			else
+			{
+				return Json($"Email {email} is already in use.");
+			}
+			//if (result == null)
+			//{
+			//	return Json(true);
+			//}
+			//else
+			//{
+			//	return Json($"Email {email} is already in use.");
+			//}
+
+			//return Json(true);
+		}
+	}
 }

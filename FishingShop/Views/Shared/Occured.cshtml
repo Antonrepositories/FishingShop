@@ -1,0 +1,20 @@
+﻿<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/FishingShop.styles.css" asp-append-version="true" />
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css">
+</head>
+<div style="margin-left:15px">
+<h1 style="color:red">Error occured</h1>
+<h2>General errors</h2>
+<p>1. Incorrect password:</p>
+	<p style="margin-left:10px">Passwords must contain an uppercase character, a lowercase character, a digit and a non-alphanumeric character</p>
+	<p style="margin-left:10px">Wrong password</p>
+<p>2. Email error</p>
+	<p style="margin-left:10px">Email is already registered</p>
+<p>3. Access denied</p>
+<a class="btn btn-primary" asp-controller="Account" asp-action="Register">Back to Register page</a>
+<a class="btn btn-primary" asp-controller="Account" asp-action="Login">Back to Login page</a>
+<div/>
